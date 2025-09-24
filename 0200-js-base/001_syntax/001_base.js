@@ -3,6 +3,7 @@
  *
  */
 function helloWorld() {
+  console.log('Hello World');
 }
 
 /**
@@ -10,6 +11,8 @@ function helloWorld() {
  *
  */
 function displayConst() {
+  const hoge = 'hoge';
+  console.log(hoge);
 }
 
 /**
@@ -17,6 +20,8 @@ function displayConst() {
  *
  */
 function displayLet() {
+  let hoge = 'hoge';
+  console.log(hoge);
 }
 
 /**
@@ -24,6 +29,7 @@ function displayLet() {
  *
  */
 function displayArgument(arg) {
+  console.log(arg);
 }
 
 /**
@@ -31,6 +37,7 @@ function displayArgument(arg) {
  *
  */
 function sumTwoArgs(a, b) {
+  return a + b;
 }
 
 /**
@@ -38,13 +45,19 @@ function sumTwoArgs(a, b) {
  *
  */
 function subtractTwoArgs(a, b) {
+  return a - b;
 }
 
 /**
  *  1.7 渡された二つの引数の商を返却するメソッドを実装してください。0 での割り算はnullを返却してください。
  *
  */
+
 function quotientTwoArgs(a, b) {
+  if (b === 0) {
+    return null;
+  }
+  return Math.floor(a / b);
 }
 
 /**
@@ -52,6 +65,7 @@ function quotientTwoArgs(a, b) {
  *
  */
 function productTwoArgs(a, b) {
+  return a * b;
 }
 
 /**
@@ -59,6 +73,7 @@ function productTwoArgs(a, b) {
  *
  */
 function remainderTwoArgs(a) {
+  return a % 2;
 }
 
 /**
@@ -66,6 +81,10 @@ function remainderTwoArgs(a) {
  *
  */
 function isEven(a) {
+  if (a % 2 === 0) {
+    return true;
+  }
+  return false;
 }
 
 /**
@@ -73,6 +92,7 @@ function isEven(a) {
  *
  */
 function concatString(a, b) {
+  return a + b;
 }
 
 module.exports = {
@@ -86,5 +106,5 @@ module.exports = {
   productTwoArgs,
   remainderTwoArgs,
   isEven,
-  concatString
-}
+  concatString,
+};

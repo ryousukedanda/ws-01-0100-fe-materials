@@ -6,6 +6,7 @@
  */
 
 function flatten(list) {
+  return list.flat();
 }
 
 /**
@@ -26,6 +27,11 @@ function flatten(list) {
  */
 
 function toMap(list) {
+  let output = {};
+  for (let i = 0; i < list.length; i++) {
+    output = { ...output, [list[i]]: true };
+  }
+  return output;
 }
 
 /**
@@ -38,6 +44,7 @@ function toMap(list) {
  */
 
 function toList(obj) {
+  return Object.entries(obj).flat();
 }
 
 /**
@@ -58,6 +65,11 @@ function toList(obj) {
  */
 
 function ids(obj) {
+  const result = [];
+  for (element of obj) {
+    result.push(element.id);
+  }
+  return result;
 }
 
 /**
@@ -74,6 +86,10 @@ function ids(obj) {
  */
 
 function merge(a, b) {
+  for (let i = 0; i < b.length; i++) {
+    a.push(b[i]);
+  }
+  return Array.from(new Set(a));
 }
 
 /**
@@ -89,6 +105,15 @@ function merge(a, b) {
  */
 
 function intersection(a, b) {
+  const result = [];
+  for (let i = 0; i < a.length; i++) {
+    for (let y = 0; y < b.length; y++) {
+      if (a[i] === b[y]) {
+        result.push(a[i]);
+      }
+    }
+  }
+  return result;
 }
 
 /**
@@ -99,27 +124,48 @@ function intersection(a, b) {
  *    [{ id: 1, a: 1 }, { id: 2, b: 1 }], [{ id: 1, c: 1 }, {id: 3, d: 4}]
  *      => [[id: 1, a: 1, c: 1], { id: 2, b: 1 }, {id: 3, d: 4}]
  *
+ *
+ *
  *    [{ id: 1, a: 1 }, { id: 2, b: 1 }], [{ id: 3, c: 1 }, {id: 4, d: 4}]
  *      => [{ id: 1, a: 1 }, { id: 2, b: 1 }, { id: 3, c: 1 }, { id: 4, d: 4 }]
  *
  */
 
 function mergeObjOfArray(a, b) {
+  let map = new Map();
+  for (obj of a) {
+    map.set(obj.id, { ...obj });
+  }
+  for (obj of b) {
+    if (map.has(obj.id)) {
+      map.set(obj.id, { ...map.get(obj.id), ...obj });
+    } else {
+      map.set(obj.id, { ...obj });
+    }
+  }
+
+  return Array.from(map.values());
 }
 
-/**
- *  3.8 渡されたデータの合計(count プロパティの和) を求める関数を実装してください。
- *
- *  example:
- *    [{ count: 1 , a: [{ count: 2 }, { count: 3 }], b: { count: 4 }}, { count: 5 }]
- *      => 15
- *
- *    [{ count: 1 }, { count: 2 }, { count: 3 }]
- *      => 6
- *
- */
+function sum(...data) {
+  let total = 0;
 
-function sum(data) {
+  if (Array.isArray(data)) {
+    for (const item of data) {
+      total += sum(item);
+    }
+  } else if (typeof data === 'object' && data !== null) {
+    if ('count' in data) {
+      total += data.count;
+    }
+    for (const key in data) {
+      if (typeof data[key] === 'object' && data[key] !== null) {
+        total += sum(data[key]);
+      }
+    }
+  }
+
+  return total;
 }
 
 module.exports = {
@@ -130,5 +176,5 @@ module.exports = {
   merge,
   intersection,
   mergeObjOfArray,
-  sum
-}
+  sum,
+};

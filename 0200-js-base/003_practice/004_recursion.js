@@ -15,7 +15,12 @@
  *    30 => 55
  */
 
-function sumSequence (n, sum = 0) {
+function sumSequence(n, sum = 0) {
+  if (n === 0) {
+    return sum;
+  }
+  sum = n + sumSequence(n - 1);
+  return sum;
 }
 
 /**
@@ -28,23 +33,41 @@ function sumSequence (n, sum = 0) {
  *    input: 10 => [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
  */
 
-function fibonacci (num) {
+function fibonacci(num) {
+  if (num === 0) return [];
+  if (num === 1) return [1];
+  if (num === 2) return [1, 1];
+
+  const arr = fibonacci(num - 1); // n-1 個のフィボナッチ配列を取得
+  arr.push(arr[arr.length - 1] + arr[arr.length - 2]); // 最後の 2 つを足して追加
+  return arr;
 }
 
 /**
  *  4.3 多次元配列を一次元配列に変換する関数を実装してください。
  *
  *  example:
- *    [[[1, 2], [3, 4, [5, 6]]], [[7, 8]]]
+ *    [[[1, 2], [3, 4, [5, 6]]], [[7, 8]]] [[1,2],[3,4,[5,6]],[7,8]] [1,2,3,4,[5,6],7,8]
  *      => [1, 2, 3, 4, 5, 6, 7, 8]
  *    [[[[[[[[1, 2, [3, 4]]]]]]]]]
  *      => [1, 2, 3, 4]
  *
  */
 
-function flatten (data) {
-}
+function flatten(data) {
+  let result = [];
 
+  for (const num of data) {
+    if (Array.isArray(num)) {
+      // 再帰的にフラット化して結合
+      result = result.concat(flatten(num));
+    } else {
+      result.push(num);
+    }
+  }
+
+  return result;
+}
 
 /**
  *  4.4 ディレクトリに含まれるファイルサイズの合計
@@ -61,6 +84,7 @@ function flatten (data) {
  *          type: 'folder',
  *          size: 0,
  *          children: [
+ *
  *            {
  *              type: 'folder',
  *              size: 0,
@@ -98,13 +122,24 @@ function flatten (data) {
  *    => 38
  */
 
-function fileSize (node, sum = 0) {
-}
+function fileSize(node, sum = 0) {
+  if (node.type === 'file') {
+    return node.size;
+  }
 
+  if (node.type === 'folder' && node.children) {
+    let sum = 0;
+    for (const child of node.children) {
+      sum += fileSize(child);
+    }
+    return sum;
+  }
+  return 0;
+}
 
 module.exports = {
   sumSequence,
   fibonacci,
   flatten,
-  fileSize
-}
+  fileSize,
+};

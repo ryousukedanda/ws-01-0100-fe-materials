@@ -1,4 +1,3 @@
-
 /**
  *  クラスの定義
  *
@@ -22,19 +21,41 @@
  */
 
 class Person {
+  constructor(name = '', age = 0, bio = '') {
+    this.name = name;
+    this.age = age;
+    this.bio = bio;
+  }
+  sayHi() {
+    console.log('Hi!!');
+  }
+  static describe() {
+    console.log('This is a Person class');
+  }
+
+  get isUnderage() {
+    if (this.age < 20) {
+      return true;
+    }
+    return false;
+  }
+
+  toString() {
+    return `name: ${this.name}, age: ${this.age}, bio: ${this.bio}`;
+  }
 }
 
-function main () {
-  const person = new Person('ichiro', 54, 'I like to play baseball')
-  person.sayHi()
-  Person.describe()
-  person.isUnderage
+function main() {
+  const person = new Person('ichiro', 54, 'I like to play baseball');
+  person.sayHi();
+  Person.describe();
+  person.isUnderage;
 
-  person.bio = 'I like to play basketball'
-  return person.toString()
+  person.bio = 'I like to play basketball';
+  return person.toString();
 }
 
 module.exports = {
   Person,
-  main
-}
+  main,
+};

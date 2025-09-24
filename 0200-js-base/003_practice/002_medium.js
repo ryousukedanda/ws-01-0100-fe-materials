@@ -4,13 +4,41 @@
  *  文字列を入力された数だけローテートさせる関数を実装してください
  *
  *  example:
- *    'library',  1 => 'ylibrar'
- *    'library',  3 => 'arylibr'
+ *    'library',  1 => 'ylibrar' 7
+ *    'library',  3 => 'arylibr' length 7
  *    'library', -1 => 'ibraryl'
+ *    'library', -3 => 'rarylib'
  *
  */
 function rotate(str, num) {
+  const arr = str.split('');
+  const result = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (i + num < 0) {
+      result[arr.length + i + num] = arr[i];
+    } else if (i + num > arr.length - 1) {
+      result[i + num - arr.length] = arr[i];
+    } else {
+      result[i + num] = arr[i];
+    }
+  }
+
+  return result.join('');
 }
+//AI解答 lengthの余り lengthlengthで考える
+// function rotate(str, num) {
+//   const arr = str.split('');
+//   const result = [];
+
+//   for (let i = 0; i < arr.length; i++) {
+//     // (i + num) を配列長で割った余りにすれば循環
+//     // 負の数にも対応するように + arr.length してから % を取る
+//     const newIndex = (i + num + arr.length) % arr.length;
+//     result[newIndex] = arr[i];
+//   }
+
+//   return result.join('');
+// }
 
 /**
  *  母音を除いた文字列
@@ -24,6 +52,14 @@ function rotate(str, num) {
  *
  */
 function removeVowels(str) {
+  const arr = [];
+  const boin = ['a', 'i', 'u', 'e', 'o'];
+  for (let i = 0; i < str.length; i++) {
+    if (!boin.includes(str[i])) {
+      arr.push(str[i]);
+    }
+  }
+  return arr.join('');
 }
 
 /**
@@ -32,13 +68,38 @@ function removeVowels(str) {
  *  ある文字列の中に特定の文字列がいくつ含まれるかカウントする関数を実装してください。
  *
  *  example:
- *    'abcdabeabc',  'abc' => 2
+ *    'daabcbeabc',  'abc' => 2
  *    'abc',  'abc' => 1
  *    'hogehoage',  'hoge' => 1
  *
  */
 function countStr(s1, s2) {
+  let count = 0;
+  do {
+    const index = s1.indexOf(s2);
+
+    if (index === -1) {
+      return count;
+    } else {
+      s1 = s1.substring(index + s2.length);
+      count++;
+    }
+  } while (s1);
+
+  return count;
 }
+//AI解答　こっちの方がわかりやすい
+// function countStr(s1, s2) {
+//   let count = 0;
+//   let index;
+
+//   while ((index = s1.indexOf(s2)) !== -1) {
+//     count++;
+//     s1 = s1.substring(index + s2.length);
+//   }
+
+//   return count;
+// }
 
 /**
  *  引数に与えられたアルファベットの文字列が回文であること
@@ -53,6 +114,13 @@ function countStr(s1, s2) {
  */
 
 function isPalindrome(str) {
+  const attempt = Math.floor(str.length / 2);
+  for (let i = 0; i < attempt; i++) {
+    if (str[i] !== str[str.length - 1 - i]) {
+      return false;
+    }
+  }
+  return true;
 }
 
 /**
@@ -70,6 +138,19 @@ function isPalindrome(str) {
  *
  */
 function isPrime(num) {
+  if (num === 1) {
+    return false;
+  }
+  if (num === 2) {
+    return true;
+  }
+  //2からnum-1の値の約数を調べる
+  for (i = 2; i < num; i++) {
+    if (num % i === 0) {
+      return false;
+    }
+  }
+  return true;
 }
 
 /**
@@ -88,6 +169,20 @@ function isPrime(num) {
  *
  */
 function sumWithout4andNext(array) {
+  let sum = 0;
+  for (let i = 0; i < array.length; i++) {
+    if (array[i] === 4) {
+      //次の数が4の場合、iをプラスしない
+      if (array[i + 1] === 4) {
+        continue;
+      }
+      //4の次の数を飛ばす
+      i++;
+    } else {
+      sum += array[i];
+    }
+  }
+  return sum;
 }
 
 module.exports = {
@@ -96,5 +191,5 @@ module.exports = {
   countStr,
   isPalindrome,
   isPrime,
-  sumWithout4andNext
-}
+  sumWithout4andNext,
+};

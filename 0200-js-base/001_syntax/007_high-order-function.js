@@ -1,4 +1,3 @@
-
 /**
  *  7.1 JSのfilter メソッドを自分で実装してみましょう。
  *      第一引数に配列、第二引数にコールバックが渡されるとして filter メソッドは、使わずに実装してください、
@@ -6,6 +5,13 @@
  */
 
 function filter(array, cb) {
+  let newArray = [];
+  for (let i = 0; i < array.length; i++) {
+    if (cb(array[i], i)) {
+      newArray.push(array[i]);
+    }
+  }
+  return newArray;
 }
 
 /**
@@ -15,6 +21,12 @@ function filter(array, cb) {
  */
 
 function find(array, cb) {
+  for (let i = 0; i < array.length; i++) {
+    if (cb(array[i], i)) {
+      return array[i];
+    }
+  }
+  return undefined;
 }
 
 /**
@@ -24,6 +36,13 @@ function find(array, cb) {
  */
 
 function findIndex(array, cb) {
+  for (let i = 0; i < array.length; i++) {
+    if (cb(array[i], i)) {
+      return i;
+    }
+  }
+
+  return -1;
 }
 
 /**
@@ -33,6 +52,13 @@ function findIndex(array, cb) {
  */
 
 function some(array, cb) {
+  for (let i = 0; i < array.length; i++) {
+    if (cb(array[i], i)) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 /**
@@ -42,6 +68,13 @@ function some(array, cb) {
  */
 
 function every(array, cb) {
+  for (let i = 0; i < array.length; i++) {
+    if (!cb(array[i], i)) {
+      return false;
+    }
+  }
+
+  return true;
 }
 
 /**
@@ -52,6 +85,11 @@ function every(array, cb) {
  */
 
 function map(array, cb) {
+  let newArray = [];
+  for (let i = 0; i < array.length; i++) {
+    newArray.push(cb(array[i], i));
+  }
+  return newArray;
 }
 
 /**
@@ -62,6 +100,11 @@ function map(array, cb) {
  */
 
 function forEach(array, cb) {
+  for (let i = 0; i < array.length; i++) {
+    cb(array[i], i);
+  }
+
+  return undefined;
 }
 
 module.exports = {
@@ -71,5 +114,5 @@ module.exports = {
   some,
   every,
   map,
-  forEach
-}
+  forEach,
+};

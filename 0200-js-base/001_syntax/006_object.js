@@ -8,6 +8,11 @@
  */
 
 function getPersonObject() {
+  return {
+    name: 'Bob',
+    age: 32,
+    gender: 'male',
+  };
 }
 
 /**
@@ -25,6 +30,9 @@ function getPersonObject() {
  */
 
 function keys(obj) {
+  for (const key of Object.keys(obj)) {
+    console.log(key);
+  }
 }
 
 /**
@@ -42,6 +50,9 @@ function keys(obj) {
  */
 
 function values(obj) {
+  for (const value of Object.values(obj)) {
+    console.log(value);
+  }
 }
 
 /**
@@ -57,6 +68,8 @@ function values(obj) {
  */
 
 function doubleAge(person) {
+  person.age += 1;
+  return person;
 }
 
 /**
@@ -71,6 +84,7 @@ function doubleAge(person) {
  */
 
 function setProcessedFlag(obj) {
+  return { ...obj, processed: true };
 }
 
 /**
@@ -96,6 +110,11 @@ function setProcessedFlag(obj) {
  */
 
 function assignNumber(persons) {
+  const result = {};
+  for (const person of persons) {
+    result[person] = Math.floor(Math.random() * 10) + 1;
+  }
+  return result;
 }
 
 /**
@@ -110,6 +129,15 @@ function assignNumber(persons) {
  */
 
 function isDuplicate(array) {
+  const seen = {};
+
+  for (value of array) {
+    if (seen[value]) {
+      return true;
+    }
+    seen[value] = true;
+  }
+  return false;
 }
 
 module.exports = {
@@ -119,5 +147,5 @@ module.exports = {
   doubleAge,
   setProcessedFlag,
   assignNumber,
-  isDuplicate
-}
+  isDuplicate,
+};
