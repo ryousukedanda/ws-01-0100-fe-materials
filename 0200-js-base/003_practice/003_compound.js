@@ -6,7 +6,15 @@
  */
 
 function flatten(list) {
-  return list.flat();
+  let result = [];
+  for (const num of list) {
+    if (Array.isArray(num)) {
+      result = result.concat(flatten(num));
+    } else {
+      result.push(num);
+    }
+  }
+  return result;
 }
 
 /**
@@ -147,7 +155,7 @@ function mergeObjOfArray(a, b) {
   return Array.from(map.values());
 }
 
-function sum(...data) {
+function sum(data) {
   let total = 0;
 
   if (Array.isArray(data)) {
